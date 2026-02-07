@@ -2,114 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine 💜</title>
 
 <style>
 :root{
-  --neon-pink:#ff2f92;
-  --neon-purple:#8f2fff;
-  --neon-blue:#00e5ff;
+  --pink:#ff2f92;
+  --purple:#8f2fff;
+}
+
+*{
+  box-sizing:border-box;
 }
 
 body{
   margin:0;
   height:100vh;
-  overflow:hidden;
   font-family:'Arial',sans-serif;
   background:
-    radial-gradient(circle at 20% 30%, #8f2fff44, transparent 40%),
-    radial-gradient(circle at 80% 40%, #ff2f9244, transparent 40%),
-    radial-gradient(circle at 50% 80%, #00e5ff33, transparent 45%),
+    radial-gradient(circle at 20% 20%, #8f2fff44, transparent 45%),
+    radial-gradient(circle at 80% 30%, #ff2f9244, transparent 45%),
     linear-gradient(135deg,#050008,#12001f);
-  animation:bgFlow 20s infinite alternate;
-}
-
-@keyframes bgFlow{
-  from{background-position:0% 0%;}
-  to{background-position:100% 100%;}
-}
-
-/* Neon blobs */
-.blob{
-  position:absolute;
-  width:260px;
-  height:260px;
-  filter:blur(140px);
-  opacity:.5;
-  animation:blobMove 18s infinite alternate ease-in-out;
-}
-
-.blob.one{background:var(--neon-pink); top:-80px; left:-80px;}
-.blob.two{background:var(--neon-purple); bottom:-80px; right:-80px; animation-delay:4s;}
-
-@keyframes blobMove{
-  from{transform:translate(0,0);}
-  to{transform:translate(120px,80px);}
-}
-
-/* Card */
-.card{
-  position:absolute;
-  inset:0;
-  margin:auto;
-  width:90%;
-  max-width:360px;
-  height:330px;
-  background:rgba(10,5,20,.95);
-  border-radius:28px;
-  box-shadow:
-    0 0 25px #8f2fff66,
-    0 0 40px #ff2f9244;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
-}
-
-h1{
-  color:var(--neon-pink);
-  text-align:center;
-  font-size:26px;
-  text-shadow:0 0 12px #ff2f92;
-  margin-bottom:22px;
-}
-
-/* Buttons */
-.buttons{
-  position:relative;
-  width:100%;
-  height:150px;
-}
-
-button{
-  border:none;
-  border-radius:40px;
-  padding:12px 30px;
-  font-size:18px;
-  cursor:pointer;
-  transition:.3s ease;
-}
-
-#yes{
-  background:var(--neon-pink);
-  color:white;
-  box-shadow:
-    0 0 15px #ff2f92,
-    0 0 30px #ff2f9244;
-  animation:pulse 1.8s infinite;
-}
-
-@keyframes pulse{
-  0%{box-shadow:0 0 12px #ff2f92;}
-  50%{box-shadow:0 0 30px #ff2f92;}
-  100%{box-shadow:0 0 12px #ff2f92;}
-}
-
-#no{
-  background:#222;
-  color:#ccc;
-  position:fixed;
-  z-index:999;
+  justify-content:center;
+  overflow:hidden;
 }
 
 /* Floating hearts */
@@ -120,18 +37,73 @@ button{
 
 @keyframes floatUp{
   from{transform:translateY(100vh) scale(1); opacity:1;}
-  to{transform:translateY(-10vh) scale(1.6); opacity:0;}
+  to{transform:translateY(-10vh) scale(1.5); opacity:0;}
 }
+
+/* Card */
+.card{
+  width:90%;
+  max-width:380px;
+  padding:32px 20px 40px;
+  background:rgba(10,5,20,.96);
+  border-radius:28px;
+  box-shadow:
+    0 0 25px #8f2fff66,
+    0 0 45px #ff2f9244;
+  text-align:center;
+  position:relative;
+}
+
+h1{
+  color:var(--pink);
+  font-size:28px;
+  line-height:1.3;
+  margin-bottom:28px;
+  text-shadow:0 0 12px var(--pink);
+}
+
+/* Buttons wrapper */
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+}
+
+/* Buttons */
+button{
+  border:none;
+  border-radius:999px;
+  padding:16px 0;
+  width:85%;
+  font-size:20px;
+  cursor:pointer;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+
+/* YES */
+#yes{
+  background:var(--pink);
+  color:white;
+  box-shadow:0 0 20px var(--pink);
+}
+
+/* NO (starts normal) */
+#no{
+  background:#222;
+  color:#ccc;
+}
+
+/* Music */
+audio{display:none;}
 </style>
 </head>
 
 <body>
 
-<div class="blob one"></div>
-<div class="blob two"></div>
-
 <div class="card">
   <h1>Can you be my Valentine,<br><b>Devi</b>? 💜</h1>
+
   <div class="buttons">
     <button id="yes" onclick="yesClicked()">Yes 💖</button>
     <button id="no" onclick="noClicked()">No 😒</button>
@@ -143,11 +115,11 @@ button{
 </audio>
 
 <script>
-let noCount=0;
-let yesScale=1;
-let musicStarted=false;
+let noCount = 0;
+let yesScale = 1;
+let musicStarted = false;
 
-const noTexts=[
+const noTexts = [
   "No 😒","Really? 🙄","Cold heart 💔","Still no?? 😳",
   "You evil 😭","WHY 😭😭","This hurts 😤",
   "Last chance ⚠️","I’m begging 🥲","Okay… wow 😞"
@@ -156,34 +128,41 @@ const noTexts=[
 function startMusic(){
   if(!musicStarted){
     document.getElementById("music").play();
-    musicStarted=true;
+    musicStarted = true;
   }
 }
 
 function noClicked(){
   startMusic();
 
-  const no=document.getElementById("no");
-  const yes=document.getElementById("yes");
+  const no = document.getElementById("no");
+  const yes = document.getElementById("yes");
 
   noCount++;
-  no.innerHTML=noTexts[Math.min(noCount,noTexts.length-1)];
+  no.innerHTML = noTexts[Math.min(noCount, noTexts.length - 1)];
 
-  const padding=20;
-  const maxX=window.innerWidth-no.offsetWidth-padding;
-  const maxY=window.innerHeight-no.offsetHeight-padding;
+  /* After first click, NO escapes the card */
+  no.style.position = "fixed";
+  no.style.width = "160px";
+  no.style.padding = "14px 0";
+  no.style.zIndex = "999";
 
-  no.style.left=Math.random()*maxX+"px";
-  no.style.top=Math.random()*maxY+"px";
+  const padding = 20;
+  const maxX = window.innerWidth - no.offsetWidth - padding;
+  const maxY = window.innerHeight - no.offsetHeight - padding;
 
-  yesScale+=0.16;
-  yes.style.transform=`scale(${yesScale})`;
+  no.style.left = Math.random() * maxX + "px";
+  no.style.top = Math.random() * maxY + "px";
+
+  yesScale += 0.18;
+  yes.style.transform = `scale(${yesScale})`;
+  yes.style.boxShadow = `0 0 ${20 + yesScale*10}px var(--pink)`;
 }
 
 function yesClicked(){
   startMusic();
 
-  document.body.innerHTML=`
+  document.body.innerHTML = `
     <div style="
       height:100vh;
       display:flex;
@@ -202,16 +181,16 @@ function yesClicked(){
   `;
 }
 
-/* Neon hearts */
+/* Hearts */
 setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML=Math.random()>0.5?"💜":"✨";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(18+Math.random()*28)+"px";
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = Math.random()>0.5 ? "💜" : "✨";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.fontSize = (20 + Math.random()*24) + "px";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),6000);
-},250);
+},300);
 </script>
 
 </body>
