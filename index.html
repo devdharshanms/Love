@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine 💘</title>
+<title>Be My Valentine 💖</title>
 
 <style>
 body {
@@ -11,9 +11,16 @@ body {
   font-family: 'Arial', sans-serif;
   overflow: hidden;
   background:
-    radial-gradient(circle at 20% 20%, #ffd6e8 0%, transparent 40%),
-    radial-gradient(circle at 80% 30%, #ffc1cc 0%, transparent 40%),
+    radial-gradient(circle at 20% 30%, #ff9a9e 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, #fad0c4 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #ffd1dc 0%, transparent 40%),
     linear-gradient(135deg, #ffb6c1, #ffe4e9);
+  animation: bgMove 12s infinite alternate;
+}
+
+@keyframes bgMove {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; }
 }
 
 /* Top banner */
@@ -42,14 +49,14 @@ body {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  background: white;
-  padding: 30px 20px;
-  border-radius: 25px;
+  background: rgba(255,255,255,0.95);
+  padding: 32px 20px;
+  border-radius: 28px;
   width: 85%;
   max-width: 360px;
   margin: auto;
   text-align: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 h1 {
@@ -59,7 +66,7 @@ h1 {
 
 /* Buttons */
 button {
-  padding: 12px 26px;
+  padding: 12px 28px;
   font-size: 18px;
   border: none;
   border-radius: 30px;
@@ -91,7 +98,7 @@ button {
     opacity: 1;
   }
   to {
-    transform: translateY(-10vh) scale(1.5);
+    transform: translateY(-10vh) scale(1.6);
     opacity: 0;
   }
 }
@@ -105,38 +112,45 @@ button {
 <div class="card">
   <h1>Can you be my Valentine,<br><b>Devi</b>? 💕</h1>
   <button id="yes" onclick="yesClicked()">Yes 💖</button>
-  <button id="no" onclick="noClicked()">No 🙄</button>
+  <button id="no" onclick="noClicked()">No 😒</button>
 </div>
 
 <script>
-let noClicks = 0;
+let noCount = 0;
 let yesScale = 1;
 
 const noTexts = [
-  "No 🙄",
-  "Really? 😒",
-  "Are you sure? 🤨",
+  "No 😒",
+  "Seriously? 🙄",
+  "Are you heartless? 💔",
+  "Don’t do this 😭",
   "Think again 😏",
-  "Last chance 😳",
-  "Okay stop 😭"
+  "WHY 😭😭",
+  "You enjoy pain? 😤",
+  "Still no?? 😳",
+  "Last chance ⚠️",
+  "I’m crying now 🥲",
+  "Okay… I tried 😞"
 ];
 
 function noClicked() {
   const noBtn = document.getElementById("no");
   const yesBtn = document.getElementById("yes");
 
-  // Change No text
-  noClicks++;
-  noBtn.innerHTML = noTexts[Math.min(noClicks, noTexts.length - 1)];
+  noCount++;
 
-  // Move No button
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 120);
+  // Change text (minimum 10 times)
+  const textIndex = Math.min(noCount, noTexts.length - 1);
+  noBtn.innerHTML = noTexts[textIndex];
+
+  // Move button randomly
+  const x = Math.random() * (window.innerWidth - 140);
+  const y = Math.random() * (window.innerHeight - 140);
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 
-  // Increase Yes button size
-  yesScale += 0.15;
+  // Grow YES button
+  yesScale += 0.18;
   yesBtn.style.transform = `scale(${yesScale})`;
 }
 
@@ -148,40 +162,31 @@ function yesClicked() {
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      background:linear-gradient(135deg,#ffe4e9,#ffb6c1);
-      font-size:30px;
+      background:
+        radial-gradient(circle at top, #ffd1dc, transparent),
+        linear-gradient(135deg,#ff9a9e,#fad0c4);
+      font-size:32px;
       color:#ff4d6d;
       text-align:center;
+      font-family:Arial;
     ">
       💍💖 Yayyy Devi! 💖💍<br>
       You just made me the happiest 😘
     </div>
   `;
-
-  // Confetti hearts
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (20 + Math.random() * 30) + "px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 6000);
-  }, 200);
 }
 
-// Background floating hearts
+// Floating hearts background
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
-  heart.innerHTML = "💕";
+  heart.innerHTML = Math.random() > 0.5 ? "💖" : "💕";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.fontSize = (15 + Math.random() * 30) + "px";
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 6000);
-}, 500);
+}, 300);
 </script>
 
 </body>
