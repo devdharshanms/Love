@@ -2,191 +2,216 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine 💖</title>
+<title>Be My Valentine 💜</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Arial', sans-serif;
-  overflow: hidden;
+:root{
+  --neon-pink:#ff2f92;
+  --neon-purple:#8f2fff;
+  --neon-blue:#00e5ff;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Arial',sans-serif;
   background:
-    radial-gradient(circle at 20% 30%, #ff9a9e 0%, transparent 40%),
-    radial-gradient(circle at 80% 20%, #fad0c4 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, #ffd1dc 0%, transparent 40%),
-    linear-gradient(135deg, #ffb6c1, #ffe4e9);
-  animation: bgMove 12s infinite alternate;
+    radial-gradient(circle at 20% 30%, #8f2fff44, transparent 40%),
+    radial-gradient(circle at 80% 40%, #ff2f9244, transparent 40%),
+    radial-gradient(circle at 50% 80%, #00e5ff33, transparent 45%),
+    linear-gradient(135deg,#050008,#12001f);
+  animation:bgFlow 20s infinite alternate;
 }
 
-@keyframes bgMove {
-  from { background-position: 0% 0%; }
-  to { background-position: 100% 100%; }
+@keyframes bgFlow{
+  from{background-position:0% 0%;}
+  to{background-position:100% 100%;}
 }
 
-/* Top banner */
-.banner {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 55px;
-  background: repeating-linear-gradient(
-    45deg,
-    #ff4d6d,
-    #ff4d6d 20px,
-    #ff85a1 20px,
-    #ff85a1 40px
-  );
-  color: white;
-  text-align: center;
-  line-height: 55px;
-  font-size: 20px;
-  font-weight: bold;
-  z-index: 10;
+/* Neon blobs */
+.blob{
+  position:absolute;
+  width:260px;
+  height:260px;
+  filter:blur(140px);
+  opacity:.5;
+  animation:blobMove 18s infinite alternate ease-in-out;
+}
+
+.blob.one{background:var(--neon-pink); top:-80px; left:-80px;}
+.blob.two{background:var(--neon-purple); bottom:-80px; right:-80px; animation-delay:4s;}
+
+@keyframes blobMove{
+  from{transform:translate(0,0);}
+  to{transform:translate(120px,80px);}
 }
 
 /* Card */
-.card {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.95);
-  padding: 32px 20px;
-  border-radius: 28px;
-  width: 85%;
-  max-width: 360px;
-  margin: auto;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+.card{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:90%;
+  max-width:360px;
+  height:330px;
+  background:rgba(10,5,20,.95);
+  border-radius:28px;
+  box-shadow:
+    0 0 25px #8f2fff66,
+    0 0 40px #ff2f9244;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-h1 {
-  color: #ff4d6d;
-  font-size: 26px;
+h1{
+  color:var(--neon-pink);
+  text-align:center;
+  font-size:26px;
+  text-shadow:0 0 12px #ff2f92;
+  margin-bottom:22px;
 }
 
 /* Buttons */
-button {
-  padding: 12px 28px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  margin: 12px;
-  transition: all 0.3s ease;
+.buttons{
+  position:relative;
+  width:100%;
+  height:150px;
 }
 
-#yes {
-  background: #ff4d6d;
-  color: white;
+button{
+  border:none;
+  border-radius:40px;
+  padding:12px 30px;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s ease;
 }
 
-#no {
-  background: #eee;
-  position: absolute;
+#yes{
+  background:var(--neon-pink);
+  color:white;
+  box-shadow:
+    0 0 15px #ff2f92,
+    0 0 30px #ff2f9244;
+  animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 12px #ff2f92;}
+  50%{box-shadow:0 0 30px #ff2f92;}
+  100%{box-shadow:0 0 12px #ff2f92;}
+}
+
+#no{
+  background:#222;
+  color:#ccc;
+  position:absolute;
 }
 
 /* Floating hearts */
-.heart {
-  position: absolute;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
+.heart{
+  position:absolute;
+  animation:floatUp 6s linear infinite;
 }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-10vh) scale(1.6);
-    opacity: 0;
-  }
+@keyframes floatUp{
+  from{transform:translateY(100vh) scale(1); opacity:1;}
+  to{transform:translateY(-10vh) scale(1.6); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="banner">💖 LOVE IS IN THE AIR 💖</div>
+<div class="blob one"></div>
+<div class="blob two"></div>
 
 <div class="card">
-  <h1>Can you be my Valentine,<br><b>Devi</b>? 💕</h1>
-  <button id="yes" onclick="yesClicked()">Yes 💖</button>
-  <button id="no" onclick="noClicked()">No 😒</button>
+  <h1>Can you be my Valentine,<br><b>Devi</b>? 💜</h1>
+  <div class="buttons" id="area">
+    <button id="yes" onclick="yesClicked()">Yes 💖</button>
+    <button id="no" onclick="noClicked()">No 😒</button>
+  </div>
 </div>
 
-<script>
-let noCount = 0;
-let yesScale = 1;
+<!-- Music -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_7a87c8d3c1.mp3?filename=romantic-ambient-121573.mp3">
+</audio>
 
-const noTexts = [
-  "No 😒",
-  "Seriously? 🙄",
-  "Are you heartless? 💔",
-  "Don’t do this 😭",
-  "Think again 😏",
-  "WHY 😭😭",
-  "You enjoy pain? 😤",
-  "Still no?? 😳",
-  "Last chance ⚠️",
-  "I’m crying now 🥲",
-  "Okay… I tried 😞"
+<script>
+let noCount=0;
+let yesScale=1;
+let musicStarted=false;
+
+const noTexts=[
+  "No 😒","Really? 🙄","Cold heart 💔","Still no?? 😳",
+  "You evil 😭","WHY 😭😭","This hurts 😤",
+  "Last chance ⚠️","I’m begging 🥲","Okay… wow 😞"
 ];
 
-function noClicked() {
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-
-  noCount++;
-
-  // Change text (minimum 10 times)
-  const textIndex = Math.min(noCount, noTexts.length - 1);
-  noBtn.innerHTML = noTexts[textIndex];
-
-  // Move button randomly
-  const x = Math.random() * (window.innerWidth - 140);
-  const y = Math.random() * (window.innerHeight - 140);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-
-  // Grow YES button
-  yesScale += 0.18;
-  yesBtn.style.transform = `scale(${yesScale})`;
+function startMusic(){
+  if(!musicStarted){
+    document.getElementById("music").play();
+    musicStarted=true;
+  }
 }
 
-function yesClicked() {
-  document.body.innerHTML = `
+function noClicked(){
+  startMusic();
+
+  const no=document.getElementById("no");
+  const yes=document.getElementById("yes");
+  const area=document.getElementById("area");
+
+  noCount++;
+  no.innerHTML=noTexts[Math.min(noCount,noTexts.length-1)];
+
+  const maxX=area.clientWidth-no.offsetWidth;
+  const maxY=area.clientHeight-no.offsetHeight;
+
+  no.style.left=Math.random()*maxX+"px";
+  no.style.top=Math.random()*maxY+"px";
+
+  yesScale+=0.16;
+  yes.style.transform=`scale(${yesScale})`;
+}
+
+function yesClicked(){
+  startMusic();
+
+  document.body.innerHTML=`
     <div style="
       height:100vh;
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      background:
-        radial-gradient(circle at top, #ffd1dc, transparent),
-        linear-gradient(135deg,#ff9a9e,#fad0c4);
+      background:linear-gradient(135deg,#050008,#2b004a);
+      color:#ff2f92;
       font-size:32px;
-      color:#ff4d6d;
       text-align:center;
-      font-family:Arial;
+      text-shadow:0 0 20px #ff2f92;
     ">
-      💍💖 Yayyy Devi! 💖💍<br>
-      You just made me the happiest 😘
+      💍💜 YAYYY DEVIII 💜💍<br>
+      You’re stuck with me now 😘
     </div>
   `;
 }
 
-// Floating hearts background
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = Math.random() > 0.5 ? "💖" : "💕";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random() * 30) + "px";
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 6000);
-}, 300);
+/* Neon hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=Math.random()>0.5?"💜":"✨";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(18+Math.random()*28)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},250);
 </script>
 
 </body>
