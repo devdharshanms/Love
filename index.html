@@ -108,7 +108,8 @@ button{
 #no{
   background:#222;
   color:#ccc;
-  position:absolute;
+  position:fixed;
+  z-index:999;
 }
 
 /* Floating hearts */
@@ -131,13 +132,12 @@ button{
 
 <div class="card">
   <h1>Can you be my Valentine,<br><b>Devi</b>? 💜</h1>
-  <div class="buttons" id="area">
+  <div class="buttons">
     <button id="yes" onclick="yesClicked()">Yes 💖</button>
     <button id="no" onclick="noClicked()">No 😒</button>
   </div>
 </div>
 
-<!-- Music -->
 <audio id="music" loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_7a87c8d3c1.mp3?filename=romantic-ambient-121573.mp3">
 </audio>
@@ -165,13 +165,13 @@ function noClicked(){
 
   const no=document.getElementById("no");
   const yes=document.getElementById("yes");
-  const area=document.getElementById("area");
 
   noCount++;
   no.innerHTML=noTexts[Math.min(noCount,noTexts.length-1)];
 
-  const maxX=area.clientWidth-no.offsetWidth;
-  const maxY=area.clientHeight-no.offsetHeight;
+  const padding=20;
+  const maxX=window.innerWidth-no.offsetWidth-padding;
+  const maxY=window.innerHeight-no.offsetHeight-padding;
 
   no.style.left=Math.random()*maxX+"px";
   no.style.top=Math.random()*maxY+"px";
